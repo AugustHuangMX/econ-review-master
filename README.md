@@ -105,10 +105,15 @@ tags: [review, EC487]
 > [!definition] 激励相容 (Incentive Compatibility)
 > 一个机制是激励相容的，当且仅当对所有 agent $i$，
 > 真实报告是弱占优策略...
+> 【课件页 34-38｜推荐练习：PS2 Q3, Exam 2023 Q1b】
 
 > [!intuition] 经济学直觉
 > 如果说谎能让你得到更好的分配结果，理性人一定会说谎。
 > IC 条件确保了诚实报告本身就是最优策略——不需要外部强制。
+
+> [!formula] Revenue Equivalence
+> 满足 IC 的机制下，期望支付由最低 type 的支付和分配规则唯一决定。
+> 【课件页 45-49｜推荐练习：PS3 Q1, Exam 2022 Q2】
 
 ### Problem Patterns
 
@@ -118,6 +123,7 @@ tags: [review, EC487]
 > [!technique] 解题方法
 > 1. 写出 agent 的期望效用函数
 > 2. 对 type 求导，令 FOC = 0...
+> 【课件页 40-42】
 ```
 
 ### 与原 skill 的区别

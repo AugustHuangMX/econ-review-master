@@ -19,7 +19,7 @@ Turn an economics course folder into concise, exam-oriented Obsidian Markdown st
 * **FOLDER SCAN FIRST:** before summarising, scan the course directory to discover all available materials. Use whatever is found — a flat folder with only lecture PDFs is fine; but do not ignore problem sets, solutions, or past exams when they exist alongside the lectures.
 * Default deliverable is a `.md` file written to disk, not a chat-only summary.
 * Default writing style is Chinese-first, with all important economics terms preserving the English original in parentheses.
-* Each summarised point should include source references: `(Lec 3, p.12)` or `(PS2 Q3)` or `(Past Exam 2023 Q1b)`.
+* Each summarised point must carry a page reference in the format `【课件页 XX-XX】`. When a matching pset or exam question exists, append it: `【课件页 XX-XX｜推荐练习：PS2 Q3】`.
 * Output is a single `<stem>_review.md` file placed in the course directory. No subfolder.
 
 ## Course Folder Awareness
@@ -234,15 +234,64 @@ Use these Obsidian callouts consistently:
 * `> [!exam]` — past exam observations and predictions
 * `> [!figure]` — textual description of important diagrams
 
-### Source References
+### Source References and Problem Recommendations
 
-Use inline references to trace back to original materials:
+Every knowledge point must carry two kinds of annotation at the end of the line:
 
-* Lectures: `(Lec 3, p.12)` or `(Lec 3, pp.12-14)`
-* Problem sets: `(PS2 Q3)` or `(PS2 Q3a)`
-* Solutions: `(Sol PS2 Q3)`
-* Past exams: `(Exam 2023 Q1b)` or `(Mock Q2)`
-* Seminars: `(Sem 4, p.2)`
+**1. Page reference (mandatory):** trace the point back to its source slide.
+
+Format: `【课件页 XX-XX】` at the end of each bullet or after each formula/definition. This is non-negotiable — every summarised point needs a page locator so the reader can flip back to the original slide instantly.
+
+* Single page: `【课件页 16】`
+* Page range: `【课件页 12-18】`
+* Multiple lectures: `【Lec 3 课件页 12-18】`
+* Non-lecture source: `【PS2 Q3】`, `【Exam 2023 Q1b】`
+
+**2. Problem recommendation (when available):** if a problem set question, past exam question, or seminar exercise tests this specific concept, append it after the page reference.
+
+Format: `【课件页 XX-XX｜推荐练习：PS2 Q3, Exam 2023 Q1b】`
+
+The `｜推荐练习：` delimiter separates the source reference from related practice problems. This tells the reader: "after reviewing this concept, go practice these."
+
+**Example of a fully annotated knowledge point:**
+
+```markdown
+- 联合概率质量函数 (joint pmf)：$p_{X,Y}(j,k) = P(X=j, Y=k)$，
+  包含离散随机向量的全部信息。【课件页 16｜推荐练习：PS3 Q1, Exam 2022 Q2a】
+```
+
+**Example of a definition callout with annotation:**
+
+```markdown
+> [!definition] 边缘 pmf (Marginal pmf)
+> $p_X(j) = \sum_k p_{X,Y}(j,k)$
+> 表格题通常是"沿列求 $p_X$，沿行求 $p_Y$"。
+> 【课件页 20-25｜推荐练习：PS3 Q2】
+
+> [!intuition] 经济学直觉
+> 边缘分布是"忽略另一个变量"后的分布——
+> 对所有可能的 $k$ 求和，就是把 $Y$ 的信息积掉。
+```
+
+**Example of a formula with technique and annotation:**
+
+```markdown
+> [!formula] 矩形区域概率公式
+> $$P(x_1 < X \le x_2,\; y_1 < Y \le y_2) = F(x_2,y_2) - F(x_2,y_1) - F(x_1,y_2) + F(x_1,y_1)$$
+> 【课件页 39-42｜推荐练习：PS3 Q4, Exam 2023 Q3a】
+
+> [!technique] 解题技巧
+> 连续题先画支撑区域 (support region)，再写积分上下限；
+> 别一上来就列积分。【课件页 51-56】
+```
+
+**Rules:**
+
+* Page references go on **every** bullet point, definition, formula, and technique — not just at the section level.
+* Problem recommendations go only where a matching pset/exam question was actually found. Do not fabricate recommendations.
+* If no matching problem exists for a concept, just use the page reference alone: `【课件页 16】`
+* If a concept is tested in multiple places, list all of them: `【课件页 16｜推荐练习：PS2 Q1, PS4 Q3, Exam 2022 Q2, Exam 2023 Q1a】`
+* Keep the annotation at the end of the content block, not on a separate line — it should feel like a natural suffix, not a separate element.
 
 ### Formatting Rules
 
@@ -327,7 +376,12 @@ Do not jump into chunk summaries. Read enough to understand macro-structure:
 
 ### Step 3. Scan Problem Sets and Past Exams (if available)
 
-If problem sets or past exams were found in Step 0, skim them before deep-reading lectures to build a "topic → question type" map. This tells you what to pay extra attention to during lecture reading. If none were found, skip to Step 4.
+If problem sets or past exams were found in Step 0, skim them before deep-reading lectures to build a **concept → question map**. For each question, record:
+* which concept/topic it tests
+* the question identifier (e.g. `PS2 Q3`, `Exam 2023 Q1b`)
+* the question type (compute, prove, explain, compare, etc.)
+
+This map is used in Step 4 to attach `｜推荐练习：` tags to each knowledge point. If no psets or exams were found, skip to Step 4.
 
 ### Step 4. Per-Segment Deep Reading
 
@@ -338,13 +392,15 @@ For each topic segment, read the corresponding:
 * Seminar materials for that topic (if available)
 
 Extract per segment:
-* Definitions (formal + intuitive)
-* Models (setup → solution → result → intuition)
-* Formulas with conditions
+* Definitions (formal + intuitive) — **record the exact slide page(s)**
+* Models (setup → solution → result → intuition) — **record page range**
+* Formulas with conditions — **record page(s)**
 * Key propositions with proof strategies
 * Problem patterns from psets and exams
 * Solution techniques from solutions and seminars
 * Common mistakes and 易错点
+
+**Critical:** while extracting each point, immediately attach the `【课件页 XX-XX】` reference and look up the concept→question map from Step 3 to attach `｜推荐练习：` where matches exist. Do not defer this to later — page mappings are lost if not recorded during reading.
 
 ### Step 5. Merge into Integrated Review
 
@@ -378,9 +434,10 @@ Check the merged draft:
 * No lecture block was silently dropped
 * Formulas present for formula-heavy sections
 * **Every formal result has an intuition block** (the central requirement)
+* **Every knowledge point has a `【课件页 XX-XX】` reference** — no orphan points without page locators
+* **Problem recommendations `｜推荐练习：` are attached** wherever matching pset/exam questions exist — cross-check against the topic→question map built in Step 3
 * Problem patterns from psets/exams are integrated where those resources exist
 * English terms in parentheses throughout
-* Source references attached to points
 * Math notation is correct and Obsidian-renderable
 
 If verification finds gaps: fix and re-verify.
@@ -433,6 +490,8 @@ If the user specifies a custom filename, use that instead.
 * **Isolating resources** — producing separate lecture summary + separate pset summary instead of integrating them per topic
 * One-pass summary of a long deck without segmentation
 * Losing page/source mapping during chunking
+* **Missing page references** — knowledge points without `【课件页 XX-XX】` are untraceable and useless for revision
+* **Missing problem recommendations** — if a pset or past exam question tests a concept, the `｜推荐练习：` link must be there; the reader should never have to hunt for related exercises themselves
 * Generic prose instead of structured exam points
 * Chat-only reply when file output was not waived
 * Omitting math notation — writing "the OLS estimator" instead of $\hat{\beta} = (X'X)^{-1}X'y$
@@ -450,6 +509,8 @@ If the user specifies a custom filename, use that instead.
 | "I only need the lecture slides to summarise" | If psets, solutions, or past exams exist in the same folder, they reveal what actually gets tested. Ignoring them is a failure. If only lectures exist, that is fine — degrade gracefully. |
 | "The syllabus is just administrative" | If a syllabus exists, it defines topic structure, flags important content, and reveals the exam format. Read it first. If it doesn't exist, infer structure from lectures. |
 | "I can summarise the whole PDF in one go" | Long decks need segmentation or later sections get dropped. |
+| "Section-level page ranges are good enough" | This is for exam revision lookup — point-level `【课件页】` citations matter. The reader needs to flip to the exact slide, not search through 20 pages. |
+| "I'll add the problem recommendations later" | The topic→question map is built in Step 3. If a matching problem exists and the `｜推荐练习：` tag is missing, it means the map was ignored. |
 | "The formula alone is enough" | Without intuition for why it holds and a problem pattern for how it's tested, the formula is useless for exam prep. |
 | "Economic intuition is obvious" | If it were obvious, students wouldn't struggle with it. Write it out explicitly every time. |
 | "I can skip the model setup and just give the result" | Exams test whether you can set up the model, not just recall the punchline. |
