@@ -14,21 +14,24 @@ Install the econ-slides-review skill from: ~/.claude/skills/econ-slides-review/S
 
 ```bash
 mkdir -p ~/.claude/skills/econ-slides-review
+mkdir -p ~/.claude/skills/econ-slides-review/references
 ```
 
-2. Copy `SKILL.md` into that directory:
+2. Copy `SKILL.md` and the optional references into that directory:
 
 ```bash
 cp SKILL.md ~/.claude/skills/econ-slides-review/
+cp -R references ~/.claude/skills/econ-slides-review/
 ```
 
 3. Verify:
 
 ```bash
 cat ~/.claude/skills/econ-slides-review/SKILL.md | head -5
+test -f ~/.claude/skills/econ-slides-review/references/obsidian-output-examples.md
 ```
 
-You should see the YAML frontmatter starting with `name: econ-slides-review`.
+You should see the YAML frontmatter starting with `name: econ-slides-review`, and the reference-file check should exit silently.
 
 ## Companion Skill: pdf
 
@@ -57,6 +60,14 @@ Summarize this lecture PDF into exam review notes
 
 ```
 只总结 Lecture 3-5，重点提炼公式和模型
+```
+
+```
+只生成 21 小时 problem-first 复习 roadmap，不要完整复习笔记
+```
+
+```
+润色这个文件夹里的复习大纲，先对照 past exam 和 problem set 找缺口
 ```
 
 ```
