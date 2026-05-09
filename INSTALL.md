@@ -28,7 +28,7 @@ cp -R references ~/.claude/skills/econ-slides-review/
 
 ```bash
 cat ~/.claude/skills/econ-slides-review/SKILL.md | head -5
-test -f ~/.claude/skills/econ-slides-review/references/obsidian-output-examples.md
+test -f ~/.claude/skills/econ-slides-review/references/heading-output-examples.md
 ```
 
 You should see the YAML frontmatter starting with `name: econ-slides-review`, and the reference-file check should exit silently.
@@ -64,6 +64,10 @@ Summarize this lecture PDF into exam review notes
 
 ```
 只生成 21 小时 problem-first 复习 roadmap，不要完整复习笔记
+```
+
+```
+生成今年考纲真题映射：遍历 past exam 小题，判断是否超纲，并对应到课件页和 problem set
 ```
 
 ```

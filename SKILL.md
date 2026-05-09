@@ -1,11 +1,11 @@
 ---
 name: econ-slides-review
-description: "Use when the user wants to turn economics PDF lecture slides or an economics course folder into Obsidian-compatible Markdown revision notes, a problem-first 21-hour review roadmap, or a refined existing review outline. Trigger for: 总结课件, 复习资料, 考点总结, cheat sheet, 公式速查, summarize slides, review notes, lecture summary, review roadmap, 复习路线图, 复习排期, 21小时复习计划, problem-first revision plan, 润色大纲, 修改复习大纲, or requests to integrate economics lectures with problem sets, solutions, seminars, past exams, a syllabus, or an existing outline. The skill is folder-aware: scan the course directory before summarising, classify available materials, and produce a saved Markdown artifact by default. Do not use for homework solving, essay writing, non-economics materials, or PowerPoint files that have not been exported to PDF."
+description: "Use when the user wants to turn economics PDF lecture slides or an economics course folder into portable Markdown revision notes, a problem-first 21-hour review roadmap, a refined existing review outline, or a current-scope past exam to lecture map. Trigger for: 总结课件, 复习资料, 考点总结, cheat sheet, 公式速查, summarize slides, review notes, lecture summary, review roadmap, 复习路线图, 复习排期, 21小时复习计划, problem-first revision plan, 润色大纲, 修改复习大纲, current-scope past exam map, past exam to lecture mapping, 今年考纲真题映射, 真题对应课件页, 判断真题是否超纲, or requests to integrate economics lectures with problem sets, solutions, seminars, past exams, a syllabus, or an existing outline. The skill is folder-aware: scan the course directory before summarising, classify available materials, and produce a saved Markdown artifact by default. Do not use for homework solving, essay writing, non-economics materials, or PowerPoint files that have not been exported to PDF."
 ---
 
 # Econ Slides Review
 
-Turn economics course materials into concise, exam-oriented Obsidian Markdown notes. Optimize for three things: economic intuition, source traceability, and integration with problem patterns. Do not merely compress slides.
+Turn economics course materials into concise, exam-oriented portable Markdown notes. Optimize for three things: economic intuition, source traceability, and integration with problem patterns. Do not merely compress slides.
 
 ## Operating Rules
 
@@ -14,7 +14,7 @@ Turn economics course materials into concise, exam-oriented Obsidian Markdown no
 - Default language: Chinese-first, with important economics terms preserved in English parentheses, such as `边际替代率 (Marginal Rate of Substitution, MRS)`.
 - Default scope: if the user points to a folder, scan the folder before summarising. If the user points to one specific PDF, treat it as the lecture source and produce a lecture-only review.
 - Required citations: every knowledge point, formula, definition, model result, technique, and exam observation must include a precise source locator wrapped in Markdown inline-code backticks, such as `` `Lec 3 课件页 12-18` ``.
-- Required intuition: every formal result, definition, formula, theorem, or model conclusion must be followed by a `> [!intuition]` block. If the intuition is unclear, write `> [!warning] 直觉待补充` instead of silently omitting it.
+- Required intuition: every formal result, definition, formula, theorem, or model conclusion must be followed by a `#### Economic Intuition` subsection. If the intuition is unclear, write `#### Economic Intuition` followed by `直觉待补充` instead of silently omitting it.
 - Never fabricate problem recommendations. Add `｜推荐练习：...` inside the same inline-code source tag only when a matching problem set, exam, seminar, or solution item was actually found.
 - Do not solve homework or write essays. For problem sets and exams, extract tested concepts, question patterns, and answer techniques only.
 
@@ -26,12 +26,14 @@ Infer the mode before starting deep reading. Respect scope-limiting phrases such
 |---|---|---|
 | Full review | Default for summary/review-note requests | `<stem>_review.md` with integrated notes, past exam analysis when available, 21-hour roadmap, and quick reference |
 | Roadmap only | `只生成 roadmap`, `复习排期`, `21 小时`, `problem-first roadmap`, `从题目出发安排复习` | `<stem>_roadmap.md`; do not generate full notes |
+| Current-scope past exam map | `今年考纲真题映射`, `真题对应课件页`, `判断真题是否超纲`, `current-scope past exam map`, `past exam to lecture mapping` | `<stem>_current_scope_exam_map.md`; map every past exam subquestion to current scope, lecture location, and related problem sets |
 | Outline refinement | `润色大纲`, `修改复习大纲`, `review outline`, `outline refinement`, or user points to an existing outline | Refined outline saved as `<outline-stem>_refined.md` unless the user asks to overwrite |
 
 Mode rules:
 
 - In full review mode, append a `21-Hour Problem-First Review Roadmap` section after the main topic content and past exam analysis. Keep `Quick Reference` as the final compact lookup section.
 - In roadmap-only mode, scan the folder and build the concept-to-question map, but read lecture material only as needed to connect questions back to source pages and concepts.
+- In current-scope past exam map mode, scan all past exam papers down to subquestion level, judge each subquestion against the current course scope, and keep all subquestions in the output with a scope status.
 - In outline-refinement mode, do not regenerate the whole review note unless the user asks. Audit the existing outline against the course materials, propose changes, interact with the user on priorities, then write the refined outline.
 - If the user requests multiple modes, combine them in the order requested.
 
@@ -97,7 +99,7 @@ When extra resources exist beside the lectures, integrate them into the relevant
 8. **Run the verifier pass.** Fix gaps before writing the final file.
 9. **Write the Markdown file.** Save `<stem>_review.md` directly in the course directory and confirm it exists.
 
-For roadmap-only mode, run Steps 1-4, then jump to `Problem-First Roadmap`. For outline-refinement mode, run Steps 1-4 as an audit pass, then jump to `Existing Outline Refinement`.
+For roadmap-only mode, run Steps 1-4, then jump to `Problem-First Roadmap`. For current-scope past exam map mode, run Steps 1-4, enumerate all past exam questions and subquestions, then jump to `Current-Scope Past Exam Map`. For outline-refinement mode, run Steps 1-4 as an audit pass, then jump to `Existing Outline Refinement`.
 
 ## Output Contract
 
@@ -112,7 +114,7 @@ Use one output file in the course directory, with this priority:
 
 Use a custom filename if the user specifies one.
 
-Roadmap-only output uses `<stem>_roadmap.md`. Outline refinement output uses `<outline-stem>_refined.md` by default and must not overwrite the original outline unless the user explicitly asks for that.
+Roadmap-only output uses `<stem>_roadmap.md`. Current-scope past exam map output uses `<stem>_current_scope_exam_map.md`. Outline refinement output uses `<outline-stem>_refined.md` by default and must not overwrite the original outline unless the user explicitly asks for that.
 
 ### YAML Frontmatter
 
@@ -143,24 +145,31 @@ Include `syllabus_topics` and `exam_format` only when that information was found
 ### 易错点与解题技巧
 ## Topic 2: <name>
 ## Past Exam Analysis
+## Current-Scope Past Exam Summary
 ## 21-Hour Problem-First Review Roadmap
 ## Quick Reference
 ```
 
 Skip unavailable sections rather than filling them with boilerplate. For example, omit `Past Exam Analysis` when no past exams were found.
 
-### Obsidian Callouts
+### Heading-Based Blocks
 
-- `> [!definition]`: formal definitions, preserving exact mathematical content when possible.
-- `> [!formula]`: key formulas with conditions for validity.
-- `> [!intuition]`: mandatory economic intuition after formal results.
-- `> [!example]`: representative problem patterns from problem sets, seminars, or exams.
-- `> [!technique]`: answer structures, derivation tricks, and problem-solving methods.
-- `> [!warning]`: common mistakes, fragile assumptions, tricky edge cases.
-- `> [!exam]`: past exam observations and likely tested patterns.
-- `> [!figure]`: textual descriptions of important diagrams.
+Do not use Obsidian-style callout or admonition markers. Use plain Markdown headings so the output works cleanly in Obsidian, GitHub, PDFs, Word exports, and printed notes.
 
-If formatting examples are needed, read `references/obsidian-output-examples.md`.
+Use these headings consistently:
+
+- `#### Definition`: formal definitions, preserving exact mathematical content when possible.
+- `#### Formula`: key formulas with conditions for validity.
+- `#### Economic Intuition`: mandatory economic intuition after formal results.
+- `#### Problem Pattern`: representative problem patterns from problem sets, seminars, or exams.
+- `#### Answer Technique`: answer structures, derivation tricks, and problem-solving methods.
+- `#### Common Mistakes`: fragile assumptions, tricky edge cases, and frequent errors.
+- `#### Exam Evidence`: past exam observations and likely tested patterns.
+- `#### Diagram Notes`: textual descriptions of important diagrams.
+
+For compact topics, combine related blocks under one concept heading, but never omit `#### Economic Intuition` after a formal result.
+
+If formatting examples are needed, read `references/heading-output-examples.md`.
 
 ### Citations and Practice Links
 
@@ -182,6 +191,79 @@ If formatting examples are needed, read `references/obsidian-output-examples.md`
 ```
 
 - If a formal result appears in a non-lecture source only, cite that source precisely and avoid pretending there is a slide page.
+
+### Current-Scope Past Exam Map
+
+Use this mode when the user asks whether past exam questions are still examinable under the current course scope, or asks to map past exam questions back to current lecture slides.
+
+Current scope basis:
+
+1. Prefer the current syllabus, module guide, course outline, or explicit current review outline when available.
+2. If no syllabus/outline exists, treat the current lecture PDFs as the source of truth.
+3. Use current problem sets as supporting evidence for practice alignment, not as the sole scope authority unless lectures are ambiguous.
+
+Past exam handling:
+
+- Traverse every past exam paper found in `past_exam`, `past_paper`, `exam`, `final`, `midterm`, or equivalent folders.
+- Enumerate questions down to subquestion level, such as `Exam 2023 Q1b`.
+- Keep every past exam subquestion in the output. Do not drop out-of-scope questions.
+- Do not solve the exam question. Extract the tested concept, required technique, current relevance, lecture location, and related practice.
+
+Scope status labels:
+
+- `In Scope`: the concept appears in the current syllabus or current lecture slides.
+- `Partially In Scope`: part of the subquestion matches current content, but another part uses removed or extra material.
+- `Out of Scope`: the tested concept does not appear in current syllabus or current lecture slides.
+- `Unclear`: the exam subquestion or current lecture mapping is too ambiguous to classify safely.
+
+Lecture location rules:
+
+- Prefer exact lecture page locators, such as `Lec 6 课件页 34-42`.
+- If exact pages are uncertain, use the closest lecture section/topic, such as `Lec 6 Section: Incentive Compatibility`.
+- Do not invent page numbers. Section-level fallback is better than false precision.
+
+Standalone output structure:
+
+```markdown
+# Current-Scope Past Exam Map
+
+## Current Scope Basis
+
+- Syllabus / outline used: ...
+- Current lecture slides used: ...
+- Scope inference rule: ...
+
+## Exam-to-Lecture Coverage Table
+
+| Exam | Subquestion | Topic Tested | Scope Status | Current Lecture Location | Related Problem Set | Notes |
+|---|---|---|---|---|---|---|
+
+## Question-by-Question Mapping
+
+### Exam 2023 Q1b
+
+#### Scope Status
+
+In Scope / Partially In Scope / Out of Scope / Unclear
+
+#### Tested Knowledge Point
+
+...
+
+#### Current Lecture Location
+
+`Lec 6 课件页 34-42`
+
+#### Related Problem Set
+
+`PS2 Q3`
+
+#### Mapping Note
+
+Explain briefly why this subquestion is in scope or out of scope.
+```
+
+In full review mode, include only a compact `Current-Scope Past Exam Summary` with high-value in-scope patterns and major out-of-scope warnings. Keep the full per-subquestion table for standalone current-scope map mode.
 
 ### Problem-First Roadmap
 
@@ -231,7 +313,7 @@ The refined outline should make the student's problem-first workflow visible: ea
 
 - Inline math: `$...$`; display math: `$$...$$`.
 - Use standard LaTeX supported by Obsidian MathJax, including `aligned` and `cases`.
-- Prefer short bullets and compact callouts. Avoid large prose blocks except where intuition genuinely needs 1-3 sentences.
+- Prefer short bullets and compact heading blocks. Avoid large prose blocks except where intuition genuinely needs 1-3 sentences.
 - Do not use Obsidian wikilinks, HTML tags, embedded images, or nested bullets deeper than 3 levels.
 - Use Markdown tables for payoff matrices and compact comparisons.
 
@@ -282,7 +364,7 @@ For each economic model, extract:
 
 ### Diagrams
 
-Use `> [!figure]` blocks for diagrams that matter. Describe axes, curves, equilibrium points, shifts, comparative statics, and the economic meaning of movement in the figure.
+Use `#### Diagram Notes` blocks for diagrams that matter. Describe axes, curves, equilibrium points, shifts, comparative statics, and the economic meaning of movement in the figure.
 
 ## Verifier Pass
 
@@ -293,15 +375,19 @@ Before finalizing, check:
 - No lecture block was silently dropped.
 - Available problem sets, solutions, seminars, and past exams were integrated into relevant topics.
 - The requested mode was respected; roadmap-only and outline-refinement requests did not accidentally produce a full review note.
+- Current-scope past exam map mode produced only `<stem>_current_scope_exam_map.md`, unless the user requested combined modes.
+- Current scope basis is explicit: syllabus/outline if available, otherwise current lecture PDFs.
+- Every past exam subquestion is retained with `In Scope`, `Partially In Scope`, `Out of Scope`, or `Unclear`.
+- Ambiguous mappings use section-level fallback instead of invented page numbers.
 - Full review mode includes a 21-hour problem-first roadmap unless the user opted out.
 - Roadmap tasks start from past exams/problem sets where available, then return to lecture pages.
 - Outline refinement preserves the original outline by default and saves a refined copy.
-- Every formal result has an intuition block or an explicit `直觉待补充` warning.
+- Every formal result has a `#### Economic Intuition` subsection or an explicit `直觉待补充` note.
 - Every knowledge point has a precise source locator.
 - Formula-heavy sections include formulas, assumptions, and interpretation.
 - Problem recommendations are present wherever the concept-to-question map found a match.
 - English terminology appears beside important Chinese terms.
-- Math is Obsidian-renderable.
+- Math is Markdown/MathJax-renderable.
 - The output file exists on disk.
 
 ## Failure Modes
@@ -312,6 +398,9 @@ Before finalizing, check:
 - Losing page references during chunking.
 - Adding fake practice links.
 - Generating a lecture-first roadmap when past exams or problem sets are available.
+- Dropping out-of-scope past exam subquestions instead of retaining and labeling them.
+- Inventing exact lecture page numbers when only the section can be identified.
+- Treating old past exam coverage as current scope without checking current syllabus or lecture slides.
 - Overwriting an existing outline without permission.
 - Ignoring the user's mode request and producing a full note when they asked only for a roadmap or outline refinement.
 - Writing generic prose instead of exam-useful concepts, formulas, techniques, and mistakes.

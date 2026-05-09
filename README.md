@@ -1,8 +1,8 @@
 # Econ Slides Review
 
-一个为经济学学生打造的 Claude Code Skill —— 把课程文件夹里的课件、习题、答案、真题整合成一份以**经济学直觉**为核心的 Obsidian Markdown 复习笔记，并支持从题目出发的 21 小时复习 roadmap 和已有复习大纲润色。
+一个为经济学学生打造的 Claude Code Skill —— 把课程文件夹里的课件、习题、答案、真题整合成一份以**经济学直觉**为核心的 Markdown 复习笔记，并支持从题目出发的 21 小时复习 roadmap 和已有复习大纲润色。
 
-A Claude Code Skill for economics students — turns a course folder (lectures, problem sets, solutions, past exams) into integrated Obsidian Markdown review notes centered on **economic intuition**, with problem-first 21-hour roadmaps and existing outline refinement.
+A Claude Code Skill for economics students — turns a course folder (lectures, problem sets, solutions, past exams) into integrated Markdown review notes centered on **economic intuition**, with problem-first 21-hour roadmaps and existing outline refinement.
 
 [中文](#中文) | [English](#english)
 
@@ -19,8 +19,9 @@ A Claude Code Skill for economics students — turns a course folder (lectures, 
 - 每个定义、公式、模型后面都附带**经济学直觉**（为什么这个结论成立？经济逻辑是什么？）
 - 把习题和真题中的**题型模式**整合到对应知识点下（这个概念怎么考？怎么答？）
 - 在完整复习笔记后附加 **21 小时 problem-first 复习 roadmap**：先做 Past Exam / Problem Set，再回到课件补知识点
+- 生成**今年考纲真题映射**：遍历 past exam 小题，判断是否仍在今年范围内，并对应到课件位置和 problem set
 - 如果文件夹里已有复习大纲，可以进入**大纲润色模式**，对照课件、习题和真题交互式修改
-- 输出是 **Obsidian 兼容的 Markdown**，支持 `$...$` 数学公式和 callout 语法
+- 输出是通用 **Markdown**，支持 `$...$` 数学公式和小标题结构，适合 Obsidian、打印、转 PDF 或转 Word
 - 中文为主，重要术语保留英文括注：`边际替代率 (MRS)`
 
 ### 文件夹自动识别
@@ -47,8 +48,8 @@ mkdir -p ~/.claude/skills/econ-slides-review
 mkdir -p ~/.claude/skills/econ-slides-review/references
 curl -o ~/.claude/skills/econ-slides-review/SKILL.md \
   https://raw.githubusercontent.com/AugustHuangMX/econ-review-master/main/SKILL.md
-curl -o ~/.claude/skills/econ-slides-review/references/obsidian-output-examples.md \
-  https://raw.githubusercontent.com/AugustHuangMX/econ-review-master/main/references/obsidian-output-examples.md
+curl -o ~/.claude/skills/econ-slides-review/references/heading-output-examples.md \
+  https://raw.githubusercontent.com/AugustHuangMX/econ-review-master/main/references/heading-output-examples.md
 ```
 
 或者克隆仓库：
@@ -67,8 +68,8 @@ mkdir -p .claude/skills/econ-slides-review
 mkdir -p .claude/skills/econ-slides-review/references
 curl -o .claude/skills/econ-slides-review/SKILL.md \
   https://raw.githubusercontent.com/AugustHuangMX/econ-review-master/main/SKILL.md
-curl -o .claude/skills/econ-slides-review/references/obsidian-output-examples.md \
-  https://raw.githubusercontent.com/AugustHuangMX/econ-review-master/main/references/obsidian-output-examples.md
+curl -o .claude/skills/econ-slides-review/references/heading-output-examples.md \
+  https://raw.githubusercontent.com/AugustHuangMX/econ-review-master/main/references/heading-output-examples.md
 ```
 
 ### 使用
@@ -89,6 +90,10 @@ curl -o .claude/skills/econ-slides-review/references/obsidian-output-examples.md
 
 ```
 只生成 21 小时 problem-first 复习 roadmap，不要完整复习笔记
+```
+
+```
+生成今年考纲真题映射：遍历 past exam 小题，判断是否超纲，并对应到课件页和 problem set
 ```
 
 ```
@@ -117,30 +122,29 @@ tags: [review, EC487]
 
 ## Topic 1: 机制设计 (Mechanism Design)
 
-### Key Concepts
+### 激励相容 (Incentive Compatibility, IC)
 
-> [!definition] 激励相容 (Incentive Compatibility)
-> 一个机制是激励相容的，当且仅当对所有 agent $i$，
-> 真实报告是弱占优策略...
-> `课件页 34-38｜推荐练习：PS2 Q3, Exam 2023 Q1b`
+#### Definition
 
-> [!intuition] 经济学直觉
-> 如果说谎能让你得到更好的分配结果，理性人一定会说谎。
-> IC 条件确保了诚实报告本身就是最优策略——不需要外部强制。
+一个机制是激励相容的，当且仅当对所有 agent $i$，真实报告是弱占优策略。`课件页 34-38｜推荐练习：PS2 Q3, Exam 2023 Q1b`
 
-> [!formula] Revenue Equivalence
-> 满足 IC 的机制下，期望支付由最低 type 的支付和分配规则唯一决定。
-> `课件页 45-49｜推荐练习：PS3 Q1, Exam 2022 Q2`
+#### Economic Intuition
 
-### Problem Patterns
+如果说谎能让你得到更好的分配结果，理性人一定会说谎。IC 条件确保了诚实报告本身就是最优策略，而不是依赖外部强制。
 
-> [!example] 典型题型 (PS2 Q3, Exam 2023 Q1b)
-> 给定一个拍卖机制，验证其是否满足 IC 和 IR...
+#### Formula
 
-> [!technique] 解题方法
-> 1. 写出 agent 的期望效用函数
-> 2. 对 type 求导，令 FOC = 0...
-> `课件页 40-42`
+Revenue Equivalence: 满足 IC 的机制下，期望支付由最低 type 的支付和分配规则唯一决定。`课件页 45-49｜推荐练习：PS3 Q1, Exam 2022 Q2`
+
+#### Problem Pattern
+
+给定一个拍卖机制，验证其是否满足 IC 和 IR。`PS2 Q3, Exam 2023 Q1b`
+
+#### Answer Technique
+
+1. 写出 agent 的期望效用函数。
+2. 比较 truthful report 和 deviation report。
+3. 再检查 participation / IR 约束。`课件页 40-42`
 ```
 
 ### 与原 skill 的区别
@@ -149,7 +153,7 @@ tags: [review, EC487]
 
 | | summarize-slides | econ-slides-review |
 |---|---|---|
-| 输出格式 | LaTeX → PDF | Obsidian Markdown |
+| 输出格式 | LaTeX → PDF | Portable Markdown |
 | 学科 | 通用 | 经济学特化 |
 | 输入来源 | 仅课件 PDF | 课程文件夹（课件+习题+答案+真题+大纲） |
 | 核心理念 | 覆盖率 | 经济学直觉优先 |
@@ -169,8 +173,9 @@ This is **not** about compressing slides into fewer words. It's about:
 - Attaching **economic intuition** after every definition, formula, and model (why does this result hold?)
 - Integrating **problem patterns** from psets and past exams under each topic (how is this concept tested? how should you answer?)
 - Adding a **21-hour problem-first review roadmap** that starts from past exams/problem sets, then returns to the lecture pages needed to fix gaps
+- Generating a **current-scope past exam map** that labels every past exam subquestion as in scope, partially in scope, out of scope, or unclear, then maps it to lecture locations and related problem sets
 - Refining an existing review outline through an interactive audit against lectures, psets, solutions, and past exams
-- Outputting **Obsidian-compatible Markdown** with `$...$` math and callout syntax
+- Outputting portable **Markdown** with `$...$` math and heading-based blocks
 - Chinese-first with English terms in parentheses: `边际替代率 (MRS)`
 
 ### Folder Auto-Detection
@@ -197,8 +202,8 @@ mkdir -p ~/.claude/skills/econ-slides-review
 mkdir -p ~/.claude/skills/econ-slides-review/references
 curl -o ~/.claude/skills/econ-slides-review/SKILL.md \
   https://raw.githubusercontent.com/AugustHuangMX/econ-review-master/main/SKILL.md
-curl -o ~/.claude/skills/econ-slides-review/references/obsidian-output-examples.md \
-  https://raw.githubusercontent.com/AugustHuangMX/econ-review-master/main/references/obsidian-output-examples.md
+curl -o ~/.claude/skills/econ-slides-review/references/heading-output-examples.md \
+  https://raw.githubusercontent.com/AugustHuangMX/econ-review-master/main/references/heading-output-examples.md
 ```
 
 Or clone and copy:
@@ -223,6 +228,10 @@ Make a review sheet focusing on formulas and models from Lectures 3-5
 
 ```
 Only generate a 21-hour problem-first review roadmap. Do not write the full notes.
+```
+
+```
+Generate a current-scope past exam to lecture mapping.
 ```
 
 ```
